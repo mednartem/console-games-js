@@ -34,4 +34,8 @@ console.log("remaining health monster: " + remainingHealthMonster)
 remainingHealthUser = pointsOfHealthUser - pointsOfDamageMonster * 2;
 console.log("remaining health user: " + remainingHealthUser)
 
-
+if(remainingHealthUser >= 0) {
+    console.log("user live, game to be continued")
+} else {
+    console.log("game over")
+}
