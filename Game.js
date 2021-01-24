@@ -1,19 +1,17 @@
 const nameMonster = `Dragon`;
-const pointsOfHealthMonster = 100;
-const pointsOfDamageMonster = 10;
+let pointsOfHealthMonster = 100;
+const pointsOfDamageMonster = 20;
 const lifeMonstr = true;
 const nameUser = `Warrior`;
-const pointsOfHealthUser = 100;
-const pointsOfDamageUser = 15;
+let pointsOfHealthUser = 100;
+const pointsOfDamageUser = 25;
 const life = true;
 const ally = false;
 const locationName = `Moscow`;
-let remainingHealthMonster;
-let remainingHealthUser;
 
 console.log(
-    `Description of the user: \n` + 
-    `   User name is ${nameUser} \n` + 
+    `Description of the user: \n` +
+    `   User name is ${nameUser} \n` +
     `   Points of health equals ${pointsOfHealthUser} \n` +
     `   Points of damage equals ${pointsOfDamageUser} \n` +
     `   Life is ${life} \n` +
@@ -21,23 +19,31 @@ console.log(
 );
 
 console.log(
-    `Description of the monster: \n` + 
-    `   Monster name is ${nameMonster} \n` + 
+    `Description of the monster: \n` +
+    `   Monster name is ${nameMonster} \n` +
     `   Points of health equals ${pointsOfHealthMonster} \n` +
-    `   Points of damage equals ${pointsOfDamageMonster} \n` + 
+    `   Points of damage equals ${pointsOfDamageMonster} \n` +
     `   Life is ${lifeMonstr} \n`
 );
 
 console.log(`Location is ${locationName} \n`);
 
-remainingHealthMonster = `${pointsOfHealthMonster}` - `${pointsOfDamageUser}` * 3;
-console.log(`Remaining health monster after attack: ${remainingHealthMonster}`)
+while (pointsOfHealthUser || pointsOfHealthMonster === 0) {
+    if (pointsOfHealthMonster && pointsOfHealthUser >= 0) {
+        console.log(`The user attacks to monster`);
+        pointsOfHealthMonster -= pointsOfDamageUser;
+        console.log(`Remaining health monster after attack: ${pointsOfHealthMonster}`);
 
-remainingHealthUser = `${pointsOfHealthUser}` - `${pointsOfDamageMonster}` * 2;
-console.log(`Remaining health user after attack: ${remainingHealthUser}\n`)
+        console.log(`The monster attacks to user`);
+        pointsOfHealthUser -= pointsOfDamageMonster;
+        console.log(`Remaining health user after attack: ${pointsOfHealthUser}\n`);
+    } else {
+        break;
+    }
+}
 
-if(remainingHealthUser >= 0) {
-    console.log(`User live, the game to be continued`)
-} else {
-    console.log(`Game over`)
+if (pointsOfHealthUser === 0) {
+    console.log(`Game over`);
+} else if (pointsOfHealthMonster === 0) {
+    console.log(`Congratulations! You killed the monster`);
 }
