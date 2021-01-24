@@ -12,27 +12,29 @@ let remainingHealthMonster;
 let remainingHealthUser;
 
 console.log(
-    `Name of the user: ` + `${nameUser}` + `,`,
-    `Points of health: ` + `${pointsOfHealthUser}` + `,`,
-    `Points of damage: ` + `${pointsOfDamageUser}` + `,`,
-    `Life: ` + `${life}` + `,`,
-    `Ally: ` + `${ally}`
+    `Description of the user: \n` + 
+    `   User name is ${nameUser} \n` + 
+    `   Points of health equals ${pointsOfHealthUser} \n` +
+    `   Points of damage equals ${pointsOfDamageUser} \n` +
+    `   Life is ${life} \n` +
+    `   Ally is ${ally} \n`
 );
 
 console.log(
-    `Name of the monster: ` + `${nameMonster}` + `,`,
-    `Points of health: ` + `${pointsOfHealthMonster}` + `,`,
-    `Points of damage: ` + `${pointsOfDamageMonster}` + `,`,
-    `Life: ` + `${lifeMonstr}`
+    `Description of the monster: \n` + 
+    `   Monster name is ${nameMonster} \n` + 
+    `   Points of health equals ${pointsOfHealthMonster} \n` +
+    `   Points of damage equals ${pointsOfDamageMonster} \n` + 
+    `   Life is ${lifeMonstr} \n`
 );
 
-console.log(`Location: ` + `${locationName}`);
+console.log(`Location is ${locationName} \n`);
 
 remainingHealthMonster = `${pointsOfHealthMonster}` - `${pointsOfDamageUser}` * 3;
-console.log(`Remaining health monster: ` + `${remainingHealthMonster}`)
+console.log(`Remaining health monster after attack: ${remainingHealthMonster}`)
 
 remainingHealthUser = `${pointsOfHealthUser}` - `${pointsOfDamageMonster}` * 2;
-console.log(`Remaining health user: ` + `${remainingHealthUser}`)
+console.log(`Remaining health user after attack: ${remainingHealthUser}\n`)
 
 if(remainingHealthUser >= 0) {
     console.log(`User live, the game to be continued`)
