@@ -1,48 +1,61 @@
 const locationName = `Moscow`;
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function showMessage(message) {
     console.log(message);
 }
 
-function makeEntity(name, pointsOfDamage, pointsOfHealth = 100, life = true, ally = false) {
-    return {
-        name: name,
-        pointsOfDamage: pointsOfDamage,
-        pointsOfHealth: pointsOfHealth,
-        life: life,
-        ally: ally
+const user = {
+    name: `Warrior`,
+    pointsOfDamage: getRandomInt(1, 10),
+    pointsOfHealth: 100,
+    life: true,
+    ally: false,
+
+    attackToMonster() {
+        showMessage(`The user attacks to monster`)
+        showMessage(`Damage monster: ${this.pointsOfDamage}`)
+        monster.pointsOfHealth -= user.pointsOfDamage;
+    },
+
+    showRemainingHealth() {
+        showMessage(`Remaining health user: ${user.pointsOfHealth}\n`)
     }
 }
 
-let user = makeEntity(`Warrior`, getRandomInt(10));
-let monster = makeEntity(`Dragon`, getRandomInt(10));
+const monster = {
+    name: `Dragon`,
+    pointsOfDamage: getRandomInt(1, 10),
+    pointsOfHealth: 100,
+    life: true,
+    ally: false,
 
-function attackToUser() {
-    showMessage(`The monster attacks to user`)
-    user.pointsOfHealth -= monster.pointsOfDamage;
-    showMessage(`Remaining health user after attack: ${user.pointsOfHealth}\n`)
-}
+    attackToUser() {
+        showMessage(`The monster attacks to user`)
+        showMessage(`Damage monster: ${this.pointsOfDamage}`)
+        user.pointsOfHealth -= monster.pointsOfDamage;
+    },
 
-function attackToMonster() {
-    showMessage(`The user attacks to monster`)
-    monster.pointsOfHealth -= user.pointsOfDamage;
-    showMessage(`Remaining health monster after attack: ${monster.pointsOfHealth}\n`);
+    showRemainingHealth() {
+        showMessage(`Remaining health monster: ${monster.pointsOfHealth}\n`);
+    }
 }
 
 function initialGameState() {
-    console.log(user);
-    console.log(monster);
+    showMessage(user);
+    showMessage(monster);
     showMessage(`Location: ${locationName} \n`);
 }
 
 initialGameState();
 while (true) {
-    attackToUser();
-    attackToMonster();
+    monster.attackToUser();
+    user.showRemainingHealth();
+    user.attackToMonster();
+    monster.showRemainingHealth();
     if (user.pointsOfHealth <= 0 || monster.pointsOfHealth <= 0) {
         break;
     }
