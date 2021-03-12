@@ -1,56 +1,55 @@
 const locationName = `Moscow`;
+const monster = new Monster('Dragon', getRandomInt(1, 10));
+const user = new User('Warrior', getRandomInt(1, 10));
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function showMessage(message) {
-    console.log(message);
+function User(name, pointsOfDamage, pointsOfHealth = 100, life = true, ally = false) {
+    this.name = name;
+    this.pointsOfDamage = pointsOfDamage;
+    this.pointsOfHealth = pointsOfHealth;
+    this.life = life;
+    this.ally = ally;
+
+    this.attackToMonster = function () {
+        console.log(`The user attacks to monster`)
+        console.log(`Damage monster: ${this.pointsOfDamage}`)
+        monster.pointsOfHealth -= this.pointsOfDamage;
+    };
+
+    this.showRemainingHealth = function () {
+        console.log(`Remaining health user: ${this.pointsOfHealth}\n`)
+    };
 }
 
-const user = {
-    name: `Warrior`,
-    pointsOfDamage: getRandomInt(1, 10),
-    pointsOfHealth: 100,
-    life: true,
-    ally: false,
+function Monster(name, pointsOfDamage, pointsOfHealth = 100, life = true, ally = false) {
+    this.name = name;
+    this.pointsOfDamage = pointsOfDamage;
+    this.pointsOfHealth = pointsOfHealth;
+    this.life = life;
+    this.ally = ally;
 
-    attackToMonster() {
-        showMessage(`The user attacks to monster`)
-        showMessage(`Damage monster: ${this.pointsOfDamage}`)
-        monster.pointsOfHealth -= user.pointsOfDamage;
-    },
+    this.attackToUser = function () {
+        console.log(`The monster attacks to user`);
+        console.log(`Damage monster: ${this.pointsOfDamage}`);
+        user.pointsOfHealth -= this.pointsOfDamage;
+    };
 
-    showRemainingHealth() {
-        showMessage(`Remaining health user: ${user.pointsOfHealth}\n`)
-    }
-}
-
-const monster = {
-    name: `Dragon`,
-    pointsOfDamage: getRandomInt(1, 10),
-    pointsOfHealth: 100,
-    life: true,
-    ally: false,
-
-    attackToUser() {
-        showMessage(`The monster attacks to user`)
-        showMessage(`Damage monster: ${this.pointsOfDamage}`)
-        user.pointsOfHealth -= monster.pointsOfDamage;
-    },
-
-    showRemainingHealth() {
-        showMessage(`Remaining health monster: ${monster.pointsOfHealth}\n`);
-    }
+    this.showRemainingHealth = function () {
+        console.log(`Remaining health monster: ${this.pointsOfHealth}\n`);
+    };
 }
 
 function initialGameState() {
-    showMessage(user);
-    showMessage(monster);
-    showMessage(`Location: ${locationName} \n`);
+    console.log(`USER \nName: ${user.name}`, `\nPoints of damage: ${user.pointsOfDamage}`, `\nPoints of health: ${user.pointsOfHealth}`, `\nLife: ${user.life}`, `\nAlly: ${user.ally}\n`);
+    console.log(`MONSTER \nName: ${monster.name}`, `\nPoints of damage: ${monster.pointsOfDamage}`, `\nPoints of health: ${monster.pointsOfHealth}`, `\nLife: ${monster.life}`, `\nÀlly: ${monster.ally}\n`);
+    console.log(`Location: ${locationName} \n`);
 }
 
 initialGameState();
+
 while (true) {
     monster.attackToUser();
     user.showRemainingHealth();
@@ -62,7 +61,7 @@ while (true) {
 }
 
 if (user.pointsOfHealth <= 0) {
-    showMessage(`Game over, The moster killed you!`);
+    console.log(`Game over, The moster killed you!`);
 } else if (monster.pointsOfHealth <= 0) {
-    showMessage(`Congratulations! You killed the monster!`);
+    console.log(`Congratulations! You killed the monster!`);
 }
