@@ -1,8 +1,6 @@
 const locationName = `Moscow`;
-const dragon = new MakeEntity('Dragon', getRandomInt(1, 10));
-// const ork = new Monster('Dragon', getRandomInt(1, 10));
-const warrior = new MakeEntity('Warrior', getRandomInt(1, 10));
-// const archer = new User('Archer', getRandomInt(1, 10));
+const white = [new MakeEntity('Warrior', getRandomInt(1, 10)), new MakeEntity('Archer', getRandomInt(1, 10))];
+const black = [new MakeEntity('Dragon', getRandomInt(1, 10)), new MakeEntity('Ork', getRandomInt(1, 10))];
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
@@ -26,36 +24,56 @@ function MakeEntity(name, pointsOfDamage, pointsOfHealth = 100, life = true, all
 }
 
 function initialGameState() {
-    console.log(warrior);
-    console.log(dragon);
+    console.log(white);
+    console.log(black);
     console.log(`Location: ${locationName} \n`);
 }
 
 initialGameState();
 
 while (true) {
-    console.log(`____________START______________`)
-    dragon.attack();
-    warrior.pointsOfHealth -= dragon.pointsOfDamage;
-    warrior.showRemainingHealth();
+    console.log(`____________START______________`);
 
-    if (warrior.pointsOfHealth <= 0) {
-        warrior.life = false;
+    monsterOfFirstPair.attack();
+    userOfFirstPair.pointsOfHealth -= monsterOfFirstPair.pointsOfDamage;
+    userOfFirstPair.showRemainingHealth();
+
+    if (userOfFirstPair.pointsOfHealth <= 0) {
+        userOfFirstPair.life = false;
         break;
     }
-    warrior.attack();
-    dragon.pointsOfHealth -= warrior.pointsOfDamage;
-    dragon.showRemainingHealth();
 
-    if (dragon.pointsOfHealth <= 0) {
-        dragon.life = false;
+    monsterOfSecondPair.attack();
+    userOfSecondPair.pointsOfHealth -= monsterOfSecondPair.pointsOfDamage;
+    userOfSecondPair.showRemainingHealth();
+
+    if (userOfSecondPair.pointsOfHealth <= 0) {
+        userOfSecondPair.life = false;
+        break;
+    }
+
+    userOfFirstPair.attack();
+    monsterOfFirstPair.pointsOfHealth -= userOfFirstPair.pointsOfDamage;
+    monsterOfFirstPair.showRemainingHealth();
+
+    if (monsterOfFirstPair.pointsOfHealth <= 0) {
+        monsterOfFirstPair.life = false;
+        break;
+    }
+
+    userOfSecondPair.attack();
+    monsterOfSecondPair.pointsOfHealth -= userOfSecondPair.pointsOfDamage;
+    monsterOfSecondPair.showRemainingHealth();
+
+    if (monsterOfSecondPair.pointsOfHealth <= 0) {
+        monsterOfSecondPair.life = false;
         break;
     }
     console.log(`____________FINISH______________\n`)
 }
 
-if (!warrior.life) {
+if (!userOfFirstPair.life || userOfSecondPair.life) {
     console.log(`Game over, The moster killed you!`);
-} else if (!dragon.life) {
+} else if (!monsterOfFirstPair.life || monsterOfSecondPair.life) {
     console.log(`Congratulations! You killed the monster!`);
 }
