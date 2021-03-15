@@ -64,8 +64,10 @@ console.log(`____________FINISH______________\n`)
 
 
 
-if (!white[0].life || white[1].life) {
+if (!white[0].life && white[1].life) {
     console.log(`Game over, The moster killed you!`);
-} else if (!black[0].life || black[1].life) {
+} else if (!black[0].life && black[1].life) {
     console.log(`Congratulations! You killed the monster!`);
+} else{
+    console.log("Draw")
 }
