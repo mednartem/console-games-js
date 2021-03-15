@@ -29,51 +29,43 @@ function initialGameState() {
     console.log(`Location: ${locationName} \n`);
 }
 
-initialGameState();
+function fight(firstEnity, secondEnity) {
+    while(true) {
+        firstEnity.attack();
+        secondEnity.pointsOfHealth -= firstEnity.pointsOfDamage;
+        secondEnity.showRemainingHealth();
 
-while (true) {
-    console.log(`____________START______________`);
+        if (firstEnity.pointsOfHealth <= 0) {
+            firstEnity.life = false;
+            break;
+        }
 
-    monsterOfFirstPair.attack();
-    userOfFirstPair.pointsOfHealth -= monsterOfFirstPair.pointsOfDamage;
-    userOfFirstPair.showRemainingHealth();
+        secondEnity.attack();
+        firstEnity.pointsOfHealth -= secondEnity.pointsOfDamage;
+        firstEnity.showRemainingHealth();
 
-    if (userOfFirstPair.pointsOfHealth <= 0) {
-        userOfFirstPair.life = false;
-        break;
+        if (secondEnity.pointsOfHealth <= 0) {
+            secondEnity.life = false;
+            break;
+        }
     }
-
-    monsterOfSecondPair.attack();
-    userOfSecondPair.pointsOfHealth -= monsterOfSecondPair.pointsOfDamage;
-    userOfSecondPair.showRemainingHealth();
-
-    if (userOfSecondPair.pointsOfHealth <= 0) {
-        userOfSecondPair.life = false;
-        break;
-    }
-
-    userOfFirstPair.attack();
-    monsterOfFirstPair.pointsOfHealth -= userOfFirstPair.pointsOfDamage;
-    monsterOfFirstPair.showRemainingHealth();
-
-    if (monsterOfFirstPair.pointsOfHealth <= 0) {
-        monsterOfFirstPair.life = false;
-        break;
-    }
-
-    userOfSecondPair.attack();
-    monsterOfSecondPair.pointsOfHealth -= userOfSecondPair.pointsOfDamage;
-    monsterOfSecondPair.showRemainingHealth();
-
-    if (monsterOfSecondPair.pointsOfHealth <= 0) {
-        monsterOfSecondPair.life = false;
-        break;
-    }
-    console.log(`____________FINISH______________\n`)
 }
 
-if (!userOfFirstPair.life || userOfSecondPair.life) {
+
+initialGameState();
+
+console.log(`____________START______________`);
+fight(white[0], black[0]);
+console.log(`____________FINISH______________\n`)
+
+console.log(`____________START______________`);
+fight(white[1], black[1]);
+console.log(`____________FINISH______________\n`)
+
+
+
+if (!white[0].life || white[1].life) {
     console.log(`Game over, The moster killed you!`);
-} else if (!monsterOfFirstPair.life || monsterOfSecondPair.life) {
+} else if (!black[0].life || black[1].life) {
     console.log(`Congratulations! You killed the monster!`);
 }
