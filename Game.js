@@ -28,20 +28,14 @@ function initialGameState() {
     console.log(`Location: ${locationName} \n`);
 }
 
-//Так почему то не работает... когда вызываешь метод и подставляешь массив, приходит undefined
-// function getFirstAliveEntity(entities) {
-//     entities.filter((entity) => entity.life == true)[0];
-// }
+function getFirstAliveEntity(entities) {
+    return entities.find(entity => entity.life == true);
+}
 
 function finishGame(kinds, evils) {
-    // let kind = getFirstAliveEntity(kinds);
-    // let evil = getFirstAliveEntity(evils);
-    let kind = kinds.filter((entity) => entity.life == true)[0];
-    let evil = evils.filter((entity) => entity.life == true)[0];
-
-    if (evil === undefined) {
+    if (getFirstAliveEntity(evils) === undefined) {
         console.log(`Congratulations! You killed all the monster!\n`);
-    } else if (kind === undefined) {
+    } else if (getFirstAliveEntity(kinds) === undefined) {
         console.log(`Game over, The moster killed you!\n`);
     } else {
         console.log("You need to think how improve this code...\n");
@@ -79,10 +73,8 @@ function fight(kind, evil) {
 
 function war(kinds, evils) {
     while (true) {
-        // let kind = getFirstAliveEntity(kinds);
-        // let evil = getFirstAliveEntity(evils);
-        let kind = kinds.filter((entity) => entity.life == true)[0];
-        let evil = evils.filter((entity) => entity.life == true)[0];
+        let kind = getFirstAliveEntity(kinds);
+        let evil = getFirstAliveEntity(evils);
 
         if (kind === undefined || evil === undefined) {
             break;
