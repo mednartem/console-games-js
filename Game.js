@@ -1,12 +1,12 @@
 const locationName = `Moscow`;
-const white = [new MakeEntity('Warrior', getRandomInt(1, 10)), new MakeEntity('Archer', getRandomInt(1, 10))];
-const black = [new MakeEntity('Dragon', getRandomInt(1, 10)), new MakeEntity('Ork', getRandomInt(1, 10))];
+const kind = [new Entity('Warrior', getRandomInt(1, 10)), new Entity('Archer', getRandomInt(1, 10))];
+const evil = [new Entity('Dragon', getRandomInt(1, 10)), new Entity('Ork', getRandomInt(1, 10))];
 
 function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function MakeEntity(name, pointsOfDamage, pointsOfHealth = 100, life = true, ally = false) {
+function Entity(name, pointsOfDamage, pointsOfHealth = 10, life = true, ally = false) {
     this.name = name;
     this.pointsOfDamage = pointsOfDamage;
     this.pointsOfHealth = pointsOfHealth;
@@ -19,55 +19,80 @@ function MakeEntity(name, pointsOfDamage, pointsOfHealth = 100, life = true, all
     };
 
     this.showRemainingHealth = function () {
-        console.log(`Remaining health ${this.name}: ${this.pointsOfHealth}\n`)
+        console.log(`Remaining health ${this.name} = ${this.pointsOfHealth}\n`)
     };
 }
 
 function initialGameState() {
-    console.log(white);
-    console.log(black);
+    console.log(`\n____________START GAME______________\n`);
     console.log(`Location: ${locationName} \n`);
 }
 
-function fight(firstEnity, secondEnity) {
-    while(true) {
-        firstEnity.attack();
-        secondEnity.pointsOfHealth -= firstEnity.pointsOfDamage;
-        secondEnity.showRemainingHealth();
+//Так почему то не работает... когда вызываешь метод и подставляешь массив, приходит undefined
+// function getFirstAliveEntity(entities) {
+//     entities.filter((entity) => entity.life == true)[0];
+// }
 
-        if (firstEnity.pointsOfHealth <= 0) {
-            firstEnity.life = false;
+function finishGame(kinds, evils) {
+    // let kind = getFirstAliveEntity(kinds);
+    // let evil = getFirstAliveEntity(evils);
+    let kind = kinds.filter((entity) => entity.life == true)[0];
+    let evil = evils.filter((entity) => entity.life == true)[0];
+
+    if (evil === undefined) {
+        console.log(`Congratulations! You killed all the monster!\n`);
+    } else if (kind === undefined) {
+        console.log(`Game over, The moster killed you!\n`);
+    } else {
+        console.log("You need to think how improve this code...\n");
+    }
+
+    console.log(`____________FINISH GAME______________\n`);
+}
+
+function fight(kind, evil) {
+    console.log(`START FIGHT ${kind.name} VS ${evil.name}\n`);
+
+    while (true) {
+        kind.attack();
+        evil.pointsOfHealth -= kind.pointsOfDamage;
+        evil.showRemainingHealth();
+
+        if (evil.pointsOfHealth <= 0) {
+            evil.life = false;
+            console.log(`${kind.name} killed the monster ${evil.name}!\n`)
             break;
         }
 
-        secondEnity.attack();
-        firstEnity.pointsOfHealth -= secondEnity.pointsOfDamage;
-        firstEnity.showRemainingHealth();
+        evil.attack();
+        kind.pointsOfHealth -= evil.pointsOfDamage;
+        kind.showRemainingHealth();
 
-        if (secondEnity.pointsOfHealth <= 0) {
-            secondEnity.life = false;
+        if (kind.pointsOfHealth <= 0) {
+            kind.life = false;
+            console.log(`Sorry, the ${evil.name} killed ${kind.name}!\n`)
             break;
         }
+    }
+    console.log(`FINISH FIGHT\n\n`);
+}
+
+function war(kinds, evils) {
+    while (true) {
+        // let kind = getFirstAliveEntity(kinds);
+        // let evil = getFirstAliveEntity(evils);
+        let kind = kinds.filter((entity) => entity.life == true)[0];
+        let evil = evils.filter((entity) => entity.life == true)[0];
+
+        if (kind === undefined || evil === undefined) {
+            break;
+        }
+
+        fight(kind, evil);
     }
 }
 
 
 initialGameState();
-
-console.log(`____________START______________`);
-fight(white[0], black[0]);
-console.log(`____________FINISH______________\n`)
-
-console.log(`____________START______________`);
-fight(white[1], black[1]);
-console.log(`____________FINISH______________\n`)
-
-
-
-if (!white[0].life && white[1].life) {
-    console.log(`Game over, The moster killed you!`);
-} else if (!black[0].life && black[1].life) {
-    console.log(`Congratulations! You killed the monster!`);
-} else{
-    console.log("Draw")
-}
+war(kind, evil);
+finishGame(kind, evil);
